@@ -135,3 +135,15 @@ function drawCircle(object) {
   ctx.closePath();
   ctx.fill();
 }
+
+function loop() {
+  clear();
+  update();
+  draw();
+  queue();
+}
+
+
+function queue() {
+  window.requestAnimationFrame(loop);
+}

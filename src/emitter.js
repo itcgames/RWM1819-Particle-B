@@ -8,12 +8,13 @@ function Emitter(point, velocity, spread) {
 }
 
 Emitter.prototype.emitParticle = function() {
-  var angle = this.velocity.getAngle() + this.spread - (Math.random() * this.spread * 2);
+  var angle = this.velocity.getAngle() + this.spread - (Math.random() * this.spread * 10);
   var magnitude = this.velocity.getMagnitude();
   var position = new Vector(this.position.x, this.position.y);
 
   var velocity = Vector.fromAngle(angle, magnitude);
-  velocity.x = velocity.x/4;
-  velocity.y = velocity.y/4;
+  var random = Math.floor((Math.random() * 4) + 1);
+  velocity.x = velocity.x/random;
+  velocity.y = velocity.y/random;
   return new Particle(position,velocity);
 };

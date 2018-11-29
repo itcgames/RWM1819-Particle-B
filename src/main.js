@@ -1,28 +1,20 @@
-"use strict";
+var gameNs = {};
 
-var maxParticles = 200,
-  particleSize = 1,
-  objectSize = 3,
-  life = 0,
-  maxLife = 200,
-  loop = false,
-  alpha = 255;
+gameNs.maxParticles = 200;
+gameNs.particleSize = 1;
+gameNs.objectSize = 10;
+gameNs.life = 0;
+gameNs.maxLife = 200;
+gameNs.loop = false;
+gameNs.alpha = 255;
 
-var particles = [];
+gameNs.particles = [];
+gameNs.canvas = document.querySelector('canvas');
+gameNs.ctx = gameNs.canvas.getContext('2d');
+gameNs.canvas.width = window.innerWidth;
+gameNs.canvas.height = window.innerHeight;
+gameNs.emitters = [new Emitter(new VectorTwo(30, 30 ), VectorTwo.fromAngle(0, 2))];
 
-
-var canvas = document.querySelector('canvas');
-var ctx = canvas.getContext('2d');
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-var midX = canvas.width / 2;
-var midY = canvas.height / 2;
-var emitters = [new Emitter(new Vector(midX - 150, midY), Vector.fromAngle(0, 2))];
-
-
-//addNewParticles();
 update();
 
 addBurstParticles();

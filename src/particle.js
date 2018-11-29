@@ -1,9 +1,9 @@
 "use strict";
 
 function Particle(point, velocity, acceleration) {
-  this.position = point || new Vector(0, 0);
-  this.velocity = velocity || new Vector(0, 0);
-  this.acceleration = acceleration || new Vector(0, 0);
+  this.position = point || new VectorTwo(0, 0);
+  this.velocity = velocity || new VectorTwo(0, 0);
+  this.acceleration = acceleration || new VectorTwo(0, 0);
 }
 
 Particle.prototype.move = function () {
@@ -15,32 +15,32 @@ function killSwitch(boundsX, boundsY) {
   // a new array to hold particles within our bounds
   var currentParticles = [];
 
-  for (var i = 0; i < particles.length; i++) {
-    var particle = particles[i];
+  for (var i = 0; i < gameNs.particles.length; i++) {
+    var particle = gameNs.particles[i];
     var pos = particle.position;
-    life++;
+    gameNs.life++;
 
     if (pos.x < 0 || pos.x > boundsX || pos.y < 0 || pos.y > boundsY) continue;
 
-    if (life < maxLife)
+    if (gameNs.life < gameNs.maxLife)
     {
       particle.move();
       currentParticles.push(particle);
     }
     else{
-      life = 0;
+      gameNs.life = 0;
     }
   }
-  particles = currentParticles;
+  gameNs.particles = currentParticles;
 }
 
 function update() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (loop === true ){
+  gameNs.ctx.clearRect(0, 0, gameNs.canvas.width, gameNs.canvas.height);
+  if (gameNs.loop === true ){
     addNewParticles();
   }
 
-  killSwitch(canvas.width, canvas.height);
+  killSwitch(gameNs.canvas.width, gameNs.canvas.height);
   //gravity();
   draw();
   window.requestAnimationFrame(update);
@@ -48,87 +48,82 @@ function update() {
 
 function draw() {
   drawParticles();
-  //drawFadedParticles();
+// drawFadedParticles();
   //drawAnimationParticles();
-  emitters.forEach(drawCircle);
+  gameNs.emitters.forEach(drawCircle);
 
 }
 function addNewParticles() {
-  for (var i = 0; i < emitters.length; i++) {
-    if(particles.length < maxParticles){
-      particles.push(emitters[i].emitParticle());
-      maxLife = Math.floor(Math.random() * 100) + 50;
-
+  for (var i = 0; i < gameNs.emitters.length; i++) {
+    if(gameNs.particles.length < gameNs.maxParticles){
+      gameNs.particles.push(gameNs.emitters[i].emitParticle());
+      gameNs.maxLife = Math.floor(Math.random() * 100) + 50;
     }
-
   }
 }
 function addBurstParticles() {
-  for (var i = 0; i < emitters.length; i++) {
-    for(var j = 0; j < maxParticles; j++){
-      particles.push(emitters[i].emitParticle());
-      maxLife = Math.floor(Math.random() * 100) + 50;
+  for (var i = 0; i < gameNs.emitters.length; i++) {
+    for(var j = 0; j < gameNs.maxParticles; j++){
+      gameNs.particles.push(gameNs.emitters[i].emitParticle());
+      gameNs.maxLife = Math.floor(Math.random() * 100) + 50;
       //change velocity
-      emitters[i].spread = 90;
-
+      gameNs.emitters[i].spread = 90;
     }
   }
 }
 function drawParticles() {
-  ctx.fillStyle = 'rgb(255,255,255)';
-  for (var i = 0; i < particles.length; i++) {
-    var position = particles[i].position;
-    ctx.fillRect(position.x, position.y, particleSize, particleSize);
+  gameNs.ctx.fillStyle = 'rgb(255,0,0)';
+  for (var i = 0; i < gameNs.particles.length; i++) {
+    var position = gameNs.particles[i].position;
+    gameNs.ctx.fillRect(position.x, position.y, gameNs.particleSize, gameNs.particleSize);
   }
 }
 function gravity() {
   var gravity = 0.0098;
-  for (var i = 0; i < particles.length; i++) {
-    var velocity = particles[i].velocity;
+  for (var i = 0; i < gameNs.particles.length; i++) {
+    var velocity = gameNs.particles[i].velocity;
     velocity.y +=gravity;
   }
 }
 function drawFadedParticles() {
   var timer = 255;
-  for (var i = 0; i < particles.length; i++) {
-    var position = particles[i].position;
-    ctx.beginPath();
-    ctx.fillStyle = 'rgb(255,255,255)';
+  for (var i = 0; i < gameNs.particles.length; i++) {
+    var position = gameNs.particles[i].position;
+    gameNs.ctx.beginPath();
+    gameNs.ctx.fillStyle = 'rgb(255,0,0)';
 
     timer = timer - 10;
     if(timer<=0){
       timer==0;
     }
 
-    ctx.globalAlpha = timer;
-    ctx.fillRect(position.x, position.y, particleSize, particleSize);
-    ctx.closePath();
+    gameNs.ctx.globalAlpha = timer;
+    gameNs.ctx.fillRect(position.x, position.y, gameNs.particleSize, gameNs.particleSize);
+    gameNs.ctx.closePath();
   }
 }
 
 function drawAnimationParticles() {
 var timer = 100;
-  ctx.fillStyle = 'rgb(255,255,255)';
-  for (var i = 0; i < particles.length; i++) {
-    var position = particles[i].position;
+  gameNs.ctx.fillStyle = 'rgb(0,0,0)';
+  for (var i = 0; i < gameNs.particles.length; i++) {
+    var position = gameNs.particles[i].position;
     //didnt do just yet
     var random = Math.floor((Math.random() * 3) + 1);
 
-    ctx.beginPath();
-    ctx.fillStyle = 'rgb(255,255,255)';
+    gameNs.ctx.beginPath();
+    gameNs.ctx.fillStyle = 'rgb(255,255,255)';
 
-
-
-    particleSize = random;
-    ctx.fillRect(position.x, position.y, particleSize, particleSize);
-    ctx.closePath();
+    gameNs.particleSize = random;
+    gameNs.ctx.fillRect(position.x, position.y, gameNs.particleSize, gameNs.particleSize);
+    gameNs.ctx.closePath();
   }
 }
 
 function drawCircle(object) {
-  ctx.fillStyle = object.drawColor;
-  ctx.beginPath();
-  ctx.arc(object.position.x, object.position.y, objectSize, 0, Math.PI * 2);
-  ctx.closePath();
-  ctx.fill();
+  gameNs.ctx.fillStyle = object.drawColor;
+  gameNs.ctx.beginPath();
+  gameNs.ctx.arc(object.position.x, object.position.y, gameNs.objectSize, 0, Math.PI * 2);
+  gameNs.ctx.closePath();
+  gameNs.ctx.fill();
 }

@@ -1,6 +1,6 @@
 /* global p1Particle, describe, it, expect, should */
 
-describe('p1Particle()', function () {
+describe('main()', function () {
   'use strict';
 
   it('exists', function () {

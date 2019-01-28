@@ -4,28 +4,70 @@ describe('main()', function () {
   'use strict';
 
   it('exists', function () {
-    //expect(p1Particle).to.be.a('function');
+    if (typeof addBurstParticles == 'function') {
+    addBurstParticles();
     expect(true);
+  }
+  else{
+      expect(false);
+  }
   });
 
   it('count partilces in array', function () {
-   expect(20);
+    if (typeof addNewParticles == 'function') {
+    addNewParticles();
+    expect(true);
+  }
+  else{
+      expect(false);
+  }
  });
 
    it('gravity test', function () {
-    expect(true);
+     if (typeof gravity == 'function') {
+     gravity();
+     expect(true);
+   }
+   else{
+       expect(false);
+   }
   });
 
   it('loop test', function () {
-   expect(true);
+    if (typeof gameNs.loop == 'boolean') {
+    expect(true);
+  }
+  else{
+      expect(false);
+  }
   });
 
   it('fade test', function () {
-   expect(true);
+    if (typeof drawFadedParticles == 'function') {
+    drawFadedParticles();
+    expect(true);
+  }
+  else{
+      expect(false);
+  }
   });
-
+  it('burst test', function () {
+    if (typeof addBurstParticles == 'function') {
+      addBurstParticles();
+      expect(true);
+  }
+  else{
+      expect(false);
+  }
+  });
   it('animation test', function () {
-   expect(true);
-  });
+  if (typeof drawAnimationParticles == 'function') {
+  drawAnimationParticles();
+  expect(true);
+}
+else{
+  expect(false);
+}
+});
 
 });

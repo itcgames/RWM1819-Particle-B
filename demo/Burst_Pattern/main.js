@@ -18,7 +18,6 @@ gameNs.emitters = [new Emitter(new VectorTwo(100, 100 ), VectorTwo.fromAngle(0, 
 
 
 update();
-
-add
+addBurstParticles();
 
 draw();

@@ -39,7 +39,7 @@ function update() {
   if (gameNs.loop === true ){
     addNewParticles();
   }
-
+  
   killSwitch(gameNs.canvas.width, gameNs.canvas.height);
   //gravity();
   draw();
